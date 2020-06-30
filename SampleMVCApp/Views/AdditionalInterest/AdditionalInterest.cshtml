@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div ng-app="app" ng-controller="AdditionalInterestCtrl">
+
+    <div id="AdditionalInterest" >
+        <table class="table table-bordered">
+            <tr><td colspan="4"> Additional Interest</td></tr>
+            <tr>
+            <td>Quote #</td><td>{{Quote.QuoteNumber}}</td>
+            <td colspan="2">{{Quote.PersonFullName}}</td>
+            </tr>
+            <tr>
+            <td>Product </td><td>{{Quote.Product}}</td>
+            <td>State</td><td>{{Quote.State}}</td>
+            </tr>
+            <tr>
+            <td>Effective Date </td><td>{{Quote.EffectiveDate}}</td>
+            <td>Expiration Date</td><td>{{Quote.ExpirationDate}}</td></tr>
+        </table>
+    </div>
+
+    <p></p>
+
+    <div class="AdditionalInterestQuestion">
+        <table class="class=table table-bordered">
+            <tr><td colspan="2">Additional Interest Question</td></tr>
+            <tr>
+                <td>Do you have a loan/lease or additional interest on a vehicle ?* </td>
+                <td>
+                    <div class="radio">
+                        <label><input type="radio" ng-model='AdditionalInterestQuestion' ng-value='"true"' name="sex" ng-change="EnableDisableSection(true)">Yes</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" ng-model='AdditionalInterestQuestion' ng-value='"false"' name="sex" ng-change="EnableDisableSection(false)">No</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <p></p>
+
+    <div id="AdditionalInterestSearch" ng-show="enableSearch">
+        <table class="class=table table-bordered">
+            <tr><td colspan="3">Additional Interest Search</td></tr>
+            <tr>
+                <td align="center">Name</td>
+                <td align="left">
+                    <input type="text" ng-model='searchName' />
+                </td>
+                <td></td>
+            </tr>
+            <tr ng-hide="enableAddContact">
+                <td></td>
+                <td align="left">
+                    <input type="button" value="Search" ng-click="SearchCommand(searchName)" />
+                </td>
+                <td align="right">
+                    <input type="button" value="AddNew" ng-click="EnableAddSection()" />
+                </td>
+            </tr>
+        </table>
+        <p></p>
+        <div class="class=table table-bordered" ng-show="enableSearch">
+            <p>Search Results</p>
+
+            <ul>
+                <li ng-repeat="searchItem in searchResults">
+                    {{searchItem.Name}} + ' ' + {{searchItem.Address}} + ' ' + {{searchItem.City}} + ' ' + {{searchItem.State}} + ' ' + {{searchItem.ZipCode}}
+                        <input type="button" value="Select" />
+                </li>
+            </ul>
+
+        </div>
+         <p></p>
+        <div class="class=table table-bordered" ng-show="enableAddContact">
+            <table>
+                <tr><td colspan="2"> Contact Information </td></tr>
+                <tr><td>Address*</td> <td> <input type="text" ng-model="Contact.Address" /></td></tr>
+                <tr><td>City*</td> <td> <input type="text" ng-model="Contact.City" /></td></tr>
+                @*<tr><td>State*</td> <td> <input type="text" ng-model="contact.StateId" /></td></tr>*@
+                <tr><td>Zip Code*</td> <td> <input type="text" ng-model="Contact.ZipCode" /></td></tr>
+                <tr><td>Phone*</td> <td> <input type="text" ng-model="Contact.Phone" /></td></tr>
+                <tr><td>Fax</td> <td> <input type="text" ng-model="Contact.Fax" /></td></tr>
+                <tr><td>Email</td> <td> <input type="text" ng-model="Contact.Email" /></td></tr>
+                <tr><td colspan="2"> <input type="button" value="Save New" ng-click="SaveContact(Contact)" /> </td></tr>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="~/CustomScripts/angular.js"></script>
+<script src="~/CustomScripts/app.js"></script>
+<script src="~/CustomScripts/Services/AdditionalInterestService.js"></script>
+<script src="~/CustomScripts/Controllers/AdditionlInterestCtrl.js"></script>
+
+
+
