@@ -105,7 +105,7 @@ new State() {Code="WY",Name="Wyoming"}
         [HttpGet]
         public IEnumerable<AdditionalInterestContact> GetSearchResults(string name)
         {
-            return results.Where(s=>s.Name.Contains(name));
+            return results.Where(s=>s.Name.Trim().ToLower().Contains(name.Trim().ToLower()));
         }
 
         [HttpPost]

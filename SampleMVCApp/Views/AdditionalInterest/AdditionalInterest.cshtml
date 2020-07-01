@@ -50,22 +50,22 @@
     <p></p>
 
     <div id="AdditionalInterestSearch" ng-show="enableSearch">
-        <table class="table">
-            <tr><td colspan="3">Additional Interest Search</td></tr>
-            <tr>
+        <table class="table table-bordered">
+            <tr class="row"><td colspan="3">Additional Interest Search</td></tr>
+            <tr class="row">
                 <td align="center">Name*</td>
                 <td colspan="2" align="left">
                     <input type="text" ng-model='searchName' />
                 </td>
             </tr>
-            <tr ng-hide="enableAddContact">
+            <tr class="row" ng-hide="enableAddContact">
                 <td></td>
                 <td colspan="2" align="left">
                     <input type="button" value="Search" ng-click="SearchCommand(searchName)" class="btn btn-primary" />
                     <input type="button" value="AddNew" ng-click="EnableAddSection()" class="btn btn-primary" />
                 </td>
             </tr>
-            <tr>
+            <tr class="row">
                 <td colspan="3">
                     <p></p>
                     <div class="class=table table-bordered" ng-show="enableSearchResults">
