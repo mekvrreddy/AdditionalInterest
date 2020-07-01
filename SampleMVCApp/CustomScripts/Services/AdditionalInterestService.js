@@ -10,6 +10,12 @@ app.service('AdditionalInterestService', function ($http) {
 
     }
 
+    this.getStates = function () {
+
+        return $http.get(api + '/AdditionalInterest/GetStates');
+
+    }
+
     this.getSearchResults = function (name) {
 
         return $http.get(api + '/AdditionalInterest/GetSearchResults?name=' + name);

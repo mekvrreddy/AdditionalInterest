@@ -11,6 +11,13 @@ app.controller('AdditionalInterestCtrl', function ($scope, AdditionalInterestSer
 
     $scope.searchResults = [];
 
+    $scope.States = [];
+
+    $scope.selectedState = {
+        Code: "",
+        Name: ""
+    };
+
     $scope.Contact = {
         Name: "",
         Address :"",
@@ -24,10 +31,11 @@ app.controller('AdditionalInterestCtrl', function ($scope, AdditionalInterestSer
     };
 
     loadAdditionalInterest();
+    loadStates();
 
     $scope.enableSearch = false;
     $scope.enableAddContact = false;
-
+    $scope.enableSearchResults = false;
 
     function loadAdditionalInterest() {
 
@@ -40,11 +48,23 @@ app.controller('AdditionalInterestCtrl', function ($scope, AdditionalInterestSer
         });
     }
 
+    function loadStates() {
+
+        var states = AdditionalInterestService.getStates();
+
+        states.then(function (ai) {
+            $scope.States = ai.data;
+        }, function (errorai) {
+            alert(errrai);
+        });
+    }
+
     $scope.EnableDisableSection = function (selectedoption) {
         $scope.enableSearch = false;
         $scope.enableAddContact = false;
         $scope.searchName = "";
         $scope.searchResults = [];
+        $scope.enableSearchResults = false;
         if (selectedoption == true) {
             $scope.enableSearch = true;
         }
@@ -56,6 +76,9 @@ app.controller('AdditionalInterestCtrl', function ($scope, AdditionalInterestSer
 
         searchres.then(function (ai) {
             $scope.searchResults = ai.data;
+            if ($scope.searchResults.length > 0) {
+                $scope.enableSearchResults = true;
+            }
         }, function (errorai) {
             alert(errrai);
         });
@@ -63,6 +86,25 @@ app.controller('AdditionalInterestCtrl', function ($scope, AdditionalInterestSer
 
     $scope.EnableAddSection = function () {
         $scope.enableAddContact = true;
+        $scope.enableSearchResults = false;
+        resetContact();
+        $scope.Contact.Name = $scope.searchName;
+    }
+
+    $scope.SaveContact = function (Contact) {
+        var quote = AdditionalInterestService.SaveAdditionalInterestContact(Contact);
+
+        quote.then(function (ai) {
+            $scope.enableAddContact = false;
+            $scope.enableSearchResults = false;
+            resetContact();
+            loadSearchResults($scope.searchName);
+        }, function (errorai) {
+            alert(errrai);
+        });
+    }
+
+    function resetContact() {
         $scope.Contact = {
             Name: "",
             Address: "",
@@ -74,29 +116,10 @@ app.controller('AdditionalInterestCtrl', function ($scope, AdditionalInterestSer
             Fax: "",
             Email: ""
         };
-        $scope.Contact.Name = $scope.searchName;
     }
 
-    $scope.SaveContact = function (Contact) {
-        var quote = AdditionalInterestService.SaveAdditionalInterestContact(Contact);
-
-        quote.then(function (ai) {
-            $scope.enableAddContact = false;
-            $scope.Contact = {
-                Name: "",
-                Address: "",
-                City: "",
-                StateId: 0,
-                State: "",
-                ZipCode: "",
-                Phone: "",
-                Fax: "",
-                Email: ""
-            };
-            loadSearchResults($scope.searchName);
-        }, function (errorai) {
-            alert(errrai);
-        });
+    $scope.SelectedState = function () {
+        $scope.Contact.State = $scope.selectedState.Code;
     }
 
 });
